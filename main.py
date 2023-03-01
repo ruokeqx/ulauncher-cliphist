@@ -22,7 +22,14 @@ class KeywordQueryEventListener(EventListener):
         query = event.get_argument() or str()
         p = subprocess.Popen('cliphist list',shell=True,stdout=subprocess.PIPE)
         clipdb,_ = p.communicate()
-        clipdb = clipdb.decode().split('\n')
+        clipdb = clipdb.split(b'\n')
+        newClipdb=[]
+        for i in clipdb:
+            try:
+                newClipdb.append(i.decode())
+            except:
+                pass
+        clipdb=newClipdb
         items = []
         clip_matches = process.extract(query, choices=clipdb, limit=20, scorer=fuzz.partial_ratio)
         for clip in clip_matches:
@@ -31,9 +38,12 @@ class KeywordQueryEventListener(EventListener):
             res.stdin.close()
             res.wait()
             res = res.stdout.read()
-            items.append(ExtensionResultItem(icon='images/cliphist.svg',
+            try:
+                items.append(ExtensionResultItem(icon='images/cliphist.svg',
                                              name='%s' % clip[0],
                                              on_enter=CopyToClipboardAction(res.decode())))
+            except:
+                pass
         return RenderResultListAction(items)
 
 
