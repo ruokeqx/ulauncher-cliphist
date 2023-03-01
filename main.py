@@ -167,12 +167,21 @@ class CodeExtension(Extension):
 			existing = next((c for c in data if c["uri"] == recent["uri"]), None)
 			if (recent is not None and existing is None):
 				data.append(recent)	
+<<<<<<< HEAD
 		if query_raw.strip() != "":
 			items.append(
 				ExtensionSmallResultItem(
 					icon=Utils.get_path(f"images/icon.svg"),
 					name=query_raw,
 					on_enter=ExtensionCustomAction({'option': '', 'uri':query_raw}),
+=======
+		if query.strip() != "":
+			items.append(
+				ExtensionSmallResultItem(
+					icon=Utils.get_path(f"images/icon.svg"),
+					name=query,
+					on_enter=ExtensionCustomAction({'option': '', 'uri':query}),
+>>>>>>> main
 				)
 			)
 		for recent in data[:20]:
