@@ -36,7 +36,6 @@ class KeywordQueryEventListener(EventListener):
             res = subprocess.Popen(["cliphist","decode"],stdin=subprocess.PIPE,stdout=subprocess.PIPE)
             res.stdin.write(clip[0].encode())
             res.stdin.close()
-            res.wait()
             res = res.stdout.read()
             try:
                 items.append(ExtensionResultItem(icon='images/cliphist.svg',
